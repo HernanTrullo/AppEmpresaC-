@@ -7,6 +7,7 @@
 
 using namespace std;
 using std::vector;
+
 int main() {
 	// se crean los objetos de cada uno de los tipos
 	Administrador admin;
@@ -30,7 +31,7 @@ int main() {
 	int numeroLicencia = 0;
 	string fechaIngreso = "";
 	
-	int numeroProductores = 0;
+	int numProd = 0;
 	int numeroConsumidores = 0; 
 	
 	while (opcion != 6){
@@ -67,16 +68,12 @@ int main() {
 				admin.setTelefono(telefono);
 				admin.setDireccion(direccion);
 				
-				// Mostrar valores ingresador
-				cout << "+++++     Datos de administrador ingresados     +++++\n"; 
-				cout << "Nombre: "<<admin.getNombre() << "\n" << "Cedula: " << admin.getCedula() << "\n";
-				cout << "Direccion: " <<admin.getDireccion() << "\n"<< "Telefono: " << admin.getTelefono() << "\n";
-				cout << "Fecha de Nacimiento: " << admin.getFechaNacimiento() << "\n";
-				cout << "+++++                                           +++++ \n";
-			system("PAUSE");
+				// Mostrar valores ingresados
+				cout << "+++++     Datos de administrador ingresados     +++++\n";
+				system("PAUSE");
 			break;	
 			case 2:
-				numeroProductores = numeroProductores +1;
+				numProd = numProd + 1;
 				// Se leen cada uno de valore de la instancia del objeto de tipo productor
 				cout << "+++++++    Ingresar Productor   +++++++ \n";
 				cout << "Nombre: ";
@@ -92,11 +89,17 @@ int main() {
 				cout << "Fecha Ingreso: ";
 				cin >> fechaIngreso;
 				
-				productores[numeroProductores].setNombre(nombre);
-				productores[numeroProductores].setCedula(cedula);
-				productores[numeroProductores].setFechaNacimiento(fechaNacimiento);
-				productores[numeroProductores].setNoCuentaBancaria(numeroCtaBancaria);
+				productores[numProd].setNombre(nombre);
+				productores[numProd].setCedula(cedula);
+				productores[numProd].setFechaNacimiento(fechaNacimiento);
+				productores[numProd].setNoCuentaBancaria(numeroCtaBancaria);
+				productores[numProd].setNumeroLicencia(numeroLicencia);
+				//productores[numProd].setFechaIngreso(fechaIngreso);
 				
+				// Mostrar valores ingresados
+				//cout << "de prueba "<< productores[numProd].getCedula();
+				cout << "+++++     Datos de producto ingresados     +++++ \n";
+				system("PAUSE");
 			break;
 			case 3:
 				cout << "Opcion3 \n";
