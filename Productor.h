@@ -7,21 +7,17 @@ class Productor : public Usuario
 {
 	public:
 		Productor();
-		
+		// Funciones adicionales
+		void mostrarProductor();
 		// Setters 
 		void setNumeroLicencia(int numeroLicencia);
-		void setFechaIngreso(int fechaIngreso);
 		
 		// Getters
 		int getNumeroLicencia(){
 			return numeroLicencia;
 		}
-		string getFechaIngreso(){
-			return fechaIngreso;
-		}
 	private:
 		int numeroLicencia;
-		string fechaIngreso;
 };
 
 #endif

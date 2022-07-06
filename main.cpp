@@ -16,6 +16,7 @@ int main() {
 	SmartMetter smartMetter;
 	
 	int opcion = 0;
+	int opcion2 = 0;
 	// Variables globales
 	string nombre = "";
 	string fechaNacimiento = "";
@@ -30,8 +31,20 @@ int main() {
 	int numeroLicencia = 0;
 	string fechaIngreso = "";
 	
+	// SmartGrid
+	long identificador = 0;
+	
+	// Smartmetters
+	string descripcion = "";
+	string fechaInstalacion = "";
+	
+	// modificacadores de acceso a las acciones de ingreso de datos
 	int numeroProductores = 0;
 	int numeroConsumidores = 0; 
+	int numeroUsuarios = 0;
+	bool hayUnAdmin = false;
+	bool hayAdminSmartGrid = false;
+	
 	
 	while (opcion != 6){
 		cout << "+++++++   Bienvenido   +++++++" << "\n";
@@ -47,6 +60,7 @@ int main() {
 		
 		switch(opcion){
 			case 1:
+				hayUnAdmin = true;
 				// Se leen cada uno de valore de la instancia del objeto de tipo administrador
 				cout << "+++++++    Ingresar Administrador   +++++++ \n";
 				cout << "Nombre: ";
@@ -68,12 +82,7 @@ int main() {
 				admin.setDireccion(direccion);
 				
 				// Mostrar valores ingresador
-				cout << "+++++     Datos de administrador ingresados     +++++\n"; 
-				cout << "Nombre: "<<admin.getNombre() << "\n" << "Cedula: " << admin.getCedula() << "\n";
-				cout << "Direccion: " <<admin.getDireccion() << "\n"<< "Telefono: " << admin.getTelefono() << "\n";
-				cout << "Fecha de Nacimiento: " << admin.getFechaNacimiento() << "\n";
-				cout << "+++++                                           +++++ \n";
-			system("PAUSE");
+				cout << "Datos de administrador ingresados...\n"; 
 			break;	
 			case 2:
 				numeroProductores = numeroProductores +1;
@@ -89,33 +98,178 @@ int main() {
 				cin >> numeroCtaBancaria;
 				cout << "Numero Licencia: ";
 				cin >> numeroLicencia;
+				
+				productores[numeroProductores-1].setNombre(nombre);
+				productores[numeroProductores-1].setCedula(cedula);
+				productores[numeroProductores-1].setFechaNacimiento(fechaNacimiento);
+				productores[numeroProductores-1].setNoCuentaBancaria(numeroCtaBancaria);
+				productores[numeroProductores-1].setNumeroLicencia(numeroLicencia);
+				
+				cout << "Productor Asignado...\n";
+			break;
+			case 3:
+				numeroConsumidores = numeroConsumidores +1;
+				// Se leen cada uno de valore de la instancia del objeto de tipo productor
+				cout << "+++++++    Ingresar Consumidor   +++++++ \n";
+				cout << "Nombre: ";
+				cin >> nombre;
+				cout << "Cedula: ";
+				cin >> cedula;
+				cout << "Fecha Nacimiento: ";
+				cin >> fechaNacimiento;
+				cout << "Numero cuanta bancaria: ";
+				cin >> numeroCtaBancaria;
 				cout << "Fecha Ingreso: ";
 				cin >> fechaIngreso;
 				
-				productores[numeroProductores].setNombre(nombre);
-				productores[numeroProductores].setCedula(cedula);
-				productores[numeroProductores].setFechaNacimiento(fechaNacimiento);
-				productores[numeroProductores].setNoCuentaBancaria(numeroCtaBancaria);
+				consumidores[numeroConsumidores-1].setNombre(nombre);
+				consumidores[numeroConsumidores-1].setCedula(cedula);
+				consumidores[numeroConsumidores-1].setFechaNacimiento(fechaNacimiento);
+				consumidores[numeroConsumidores-1].setNoCuentaBancaria(numeroCtaBancaria);
+				consumidores[numeroConsumidores-1].setFechaIngreso(fechaIngreso);
 				
-			break;
-			case 3:
-				cout << "Opcion3 \n";
+				cout << "Consumidor Asignado...\n";
 			break;
 			case 4:
-				cout << "Opcion5 \n";
+				if (hayUnAdmin ){
+					if (!hayAdminSmartGrid){
+						hayAdminSmartGrid = true;
+						// Se leen cada uno de valore de la instancia del objeto de tipo productor
+						cout << "+++++++    Ingresar Smart Grid Admin Primero  +++++++ \n";
+						cout << "Identificador: ";
+						cin >> identificador;
+						
+						admin.asignarSmartGrid(identificador, admin.getDireccion());
+						cout << "SmartGrid de Administrador Asiganado...\n";
+					}
+					else{
+						// Se asignan smartGrid a los usuarios pues ya hay un admin con su smartGrid
+						// Mostrar Usuarios registrados
+						numeroUsuarios = numeroConsumidores + numeroProductores;
+						if (numeroUsuarios > 0){
+							if (numeroProductores > 0){
+								for(int i=0; i<numeroProductores; i++){
+									cout << "++++++++++++    Usuario Productores      ++++++++++++ \n";
+									cout << "Usuario: " << (i+1) << "\n";
+									productores[i].mostrarProductor();	
+								}
+								// Se elige la opcion a la cual se va asignar el smartGrig
+								cout << "Eliga una usuario para ingresar una Smart Grid: ";
+								cin >> opcion2;
+								
+								// Ingreso de datos
+								cout << "+++++++    Ingresar Smart Grid Usuarios +++++++ \n";
+								cout << "Identificador: ";
+								cin >> identificador;
+								cout << "Direccion: ";
+								cin >> direccion;
+								
+								// Se agrega un smartGrid
+								int smartGridP = 0;
+								smartGridP = productores[opcion2-1].getNoSmartGrid() + 1; 
+								productores[opcion2-1].setNoSmartGrid(smartGridP);
+								
+								productores[opcion2-1].asignarSmartGrid(identificador, direccion);
+								cout << "SmartGrid " << (smartGridP + 1) << " de Usuario " << opcion2 << " asiganado...\n";
+							}
+							if (numeroConsumidores > 0){
+								for(int i=0; i<numeroConsumidores; i++){
+									cout << "++++++++++++    Usuario Consumidores     ++++++++++++ \n";
+									cout << "Usuario: " << (i+1) << "\n";
+									consumidores[i].mostrarConsumidor();		
+								}
+								// Se elige la opcion a la cual se va asignar el smartGrig
+								cout << "Eliga una usuario para ingresar una Smart Grid: ";
+								cin >> opcion2;
+								
+								// Ingreso de datos
+								cout << "+++++++    Ingresar Smart Grid Usuarios +++++++ \n";
+								cout << "Identificador: ";
+								cin >> identificador;
+								cout << "Direccion: ";
+								cin >> direccion;
+								
+								// Se agrega un smartGrid
+								int smartGridP = 0;
+								smartGridP = productores[opcion2-1].getNoSmartGrid() + 1; 
+								consumidores[opcion2-1].setNoSmartGrid(smartGridP);
+								
+								consumidores[opcion2-1].asignarSmartGrid(identificador, direccion);
+								cout << "SmartGrid " << (smartGridP + 1) << " de Usuario " << opcion2 << " asiganado...\n";
+							}
+						}
+						else{
+							cout << "Estimado administrador, aun no hay usuarios registrados...\n";
+						}
+						
+					}
+				}
+				else{
+					cout << "Aun no hay un administrador registrado ...\n ";
+				}
 			break;
 			case 5:
-				cout << "Opcion5 \n";
+				numeroUsuarios = numeroConsumidores + numeroProductores;
+				if (numeroUsuarios > 0){
+					if (numeroProductores > 0){
+						for(int i=0; i<numeroProductores; i++){
+							cout << "++++++++++++    Usuario Productores      ++++++++++++ \n";
+							cout << "Usuario: " << (i+1) << "\n";
+							productores[i].mostrarProductor();	
+						}
+						// Se elige la opcion a la cual se va asignar el smartMetter
+						cout << "Eliga una usuario para ingresar una Smart Metter: ";
+						cin >> opcion2;
+						
+						// Ingreso de datos
+						cout << "+++++++    Ingresar Smart Grid Usuarios +++++++ \n";
+						cout << "Identificador: ";
+						cin >> identificador;
+						cout << "Descripción: ";
+						cin >> descripcion;
+						cout << "Fecha Instalacion: ";
+						cin >> fechaInstalacion;
+						
+						productores[opcion2-1].crearSmartMetter(descripcion, identificador, fechaInstalacion);
+						cout << "SmartMetter " << " de Usuario " << opcion2 << " asiganado...\n";
+					}
+					if (numeroConsumidores > 0){
+						for(int i=0; i<numeroConsumidores; i++){
+							cout << "++++++++++++    Usuario Consumidores     ++++++++++++ \n";
+							cout << "Usuario: " << (i+1) << "\n";
+							consumidores[i].mostrarConsumidor();		
+						}
+						// Se elige la opcion a la cual se va asignar el smartMetters
+						cout << "Eliga una usuario para ingresar una Smart Metters: ";
+						cin >> opcion2;
+						
+						// Ingreso de datos
+						cout << "+++++++    Ingresar Smart Metter Usuarios +++++++ \n";
+						cout << "Identificador: ";
+						cin >> identificador;
+						cout << "Descripción: ";
+						cin >> descripcion;
+						cout << "Fecha Instalacion: ";
+						cin >> fechaInstalacion;
+						
+						consumidores[opcion2-1].crearSmartMetter(descripcion, identificador, fechaInstalacion);
+						cout << "SmartMetter " << " de Usuario " << opcion2 << " asiganado...\n";
+					}
+				}
+				else{
+					cout << "Estimado, debe ingresar un usuario por lo menos ...\n";
+				}
 			break;
 			case 6:
-				cout << "ADIOS \n";
+				cout << "ADIOS !!! \n";
 				
 			break;
 				
-			default: ;
+			default: 
+				break;
 				
 		}
-	
+	system("PAUSE");
 	}
 	return 0;
 } 
