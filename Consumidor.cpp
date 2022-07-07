@@ -8,11 +8,24 @@ void Consumidor::setFechaIngreso(string fechaIngreso){
 	Consumidor::fechaIngreso = fechaIngreso;
 }
 void Consumidor::mostrarConsumidor(){
-	cout << "+++++     Datos Usuario     +++++\n";
-	cout << "Nombre: " << Consumidor::nombre << "\n";
-	cout << "Cedula: " << Consumidor::cedula << "\n";
-	cout << "Fecha Nacimiento: " << Consumidor::fechaNacimiento << "\n";
-	cout << "No Cuenta Bancaria: " << Consumidor::getNoCuentabancaria() << "\n";
+	Consumidor::mostrarDatosUsuario();
 	cout << "Fecha Ingreso: " << Consumidor::fechaIngreso << "\n";	
-	cout << "+++++                       +++++\n";
+	cout << "+++++++++++++++++++++++++++++++++\n";
+	if (Consumidor::getNoSmartGrid() >= 0){
+		for (int i=0; i<Consumidor::getNoSmartGrid()+1; i++){
+			Consumidor::mostrarSmartGrid(i);
+		}
+	}
+	else {
+		cout << "Usuario sin Smart Grid...\n";
+		cout << "+++++++++++++++                +++++++++++++++++++++\n";
+	}
+}
+void Consumidor::mostrarConsumidor1(){
+	Consumidor::mostrarDatosUsuario();
+	cout << "Fecha Ingreso: " << Consumidor::fechaIngreso << "\n";	
+	cout << "+++++++++++++++++++++++++++++++++\n";
+	if (Consumidor::getTieneSmartMetter()){
+		Consumidor::mostrarSmartMetter();
+	}
 }

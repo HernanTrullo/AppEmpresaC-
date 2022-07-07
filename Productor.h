@@ -9,6 +9,7 @@ class Productor : public Usuario
 		Productor();
 		// Funciones adicionales
 		void mostrarProductor();
+		void mostrarProducto1();
 		// Setters 
 		void setNumeroLicencia(int numeroLicencia);
 		
