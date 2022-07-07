@@ -17,11 +17,14 @@ class Usuario : public Persona
 		Usuario();
 		// Metodos adicionales
 		void crearSmartMetter(string descripcion, long identificador, string fechaInstalacion);
-		void asignarSmartGrid(long identificador, string direccion, int pos);
-		
+		void asignarSmartGrid(long identificador, string direccion);
+		void mostrarDatosUsuario();
+		void mostrarSmartGrid(int pos);
+		void mostrarSmartMetter();
 		// Setters
 		void setNoCuentaBancaria(int noCuentaBancaria);
-		
+		void setNoSmartGrid(int noSmartGrid);
+		void setHaySmartMetter(bool tieneSmartMeter);
 		// Getters
 		int getNoCuentabancaria(){
 			return noCuentaBancaria;
@@ -29,14 +32,21 @@ class Usuario : public Persona
 		SmartMetter getSmartMetter(){
 			return smartMetter;
 		}
-		vector <SmartGrid> getSmartGrid(){
-			return smartGrid;
+		SmartGrid getSmartGrid(int pos){
+			return smartGrid[pos];
 		}
-		
+		int getNoSmartGrid(){
+			return noSmartGrid;
+		}
+		bool getTieneSmartMetter(){
+			return tieneSmartMeter;
+		}
 	private:
 		int noCuentaBancaria;
 		SmartMetter smartMetter;
-		vector <SmartGrid> smartGrid;
+		SmartGrid smartGrid [100];
+		int noSmartGrid;
+		bool tieneSmartMeter;
 };
 
 #endif

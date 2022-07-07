@@ -7,6 +7,9 @@ class Consumidor : public Usuario
 {
 	public:
 		Consumidor();
+		// otras funciones adicionales
+		void mostrarConsumidor();
+		void mostrarConsumidor1();
 		// setters
 		void setFechaIngreso(string fechaIngreso);
 		
@@ -16,6 +19,7 @@ class Consumidor : public Usuario
 		}
 	private:
 		string fechaIngreso;
+		
 };
 
 #endif
